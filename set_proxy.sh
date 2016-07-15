@@ -11,8 +11,13 @@
 #				 /etc/apt/apt.conf - apt used               #-----------------------------------------------------------
 
 
-#------------Functions------------------------------------
+#--------------Functions------------------------------------
 
+# help function
+function echo_help()
+{
+	echo "Usage: $0 none|manual|auto"
+}
 # change proxy to none mode
 function set_proxy_none()
 {
@@ -30,11 +35,15 @@ function set_proxy_manual()
 function set_proxy_auto()
 {
 	echo " Set proxy mode - automatic"
-	gsettings set org.gnome.system.proxy mode automatic
+	gsettings set org.gnome.system.proxy mode auto
 }
-#-----------------Main------------------------------------
+#-------------------Main------------------------------------
 
 case "$1" in
+	"-h"|"--help" )
+		echo_help
+	;;
+
 	manual )
 		set_proxy_manual
 	;;
@@ -43,16 +52,19 @@ case "$1" in
 		set_proxy_none
 	;;
 
-	automatic )
+	automatic|auto )
 		set_proxy_auto
 	;;
 
 	* )
-		# Using pc in home
-		if [ $(ip a | grep 192.168) ]; then
+		# success - $?=0; fail - $?=1
+		ip a | grep 192.168 > /dev/null
+		# check if grep is successful
+		if [ $? -eq 0 ]; then
+			# Using pc in home
 			set_proxy_none
-		# Using pc in office
 		else
+			# Using pc in office
 			set_proxy_manual
 
 		fi
