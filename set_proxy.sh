@@ -26,6 +26,12 @@ function set_proxy_manual()
 	echo " Set proxy mode - manual"
 	gsettings set org.gnome.system.proxy mode manual
 }
+# change proxy to automatic
+function set_proxy_auto()
+{
+	echo " Set proxy mode - automatic"
+	gsettings set org.gnome.system.proxy mode automatic
+}
 #-----------------Main------------------------------------
 
 case "$1" in
@@ -37,10 +43,14 @@ case "$1" in
 		set_proxy_none
 	;;
 
+	automatic )
+		set_proxy_auto
+	;;
+
 	* )
 		# Using pc in home
 		if [ $(ip a | grep 192.168) ]; then
-			uset_proxy_none
+			set_proxy_none
 		# Using pc in office
 		else
 			set_proxy_manual
