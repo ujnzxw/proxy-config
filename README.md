@@ -24,9 +24,14 @@ Usage: set-proxy [OPTIONS] COMMAND [ none | manual | auto ]
         --update        # update proxy-config to the latest version
         --uninstall     # uninstall proxy-config
     COMMAND
-        none            # set proxy mode - none
-        man[ual]        # set proxy mode - manual
-        auto[matic]     # set proxy mode - automatic
+        none
+        man[ual]
+        auto[matic]
+
+    Examples:
+        set-proxy   none   # set proxy mode - none
+        set-proxy   man    # set proxy mode - manual
+        set-proxy   auto   # set proxy mode - automatic
 ```
 
 
