@@ -1,17 +1,40 @@
 ## Proxy setting GNOME
 
-Please set the proxy manually first.
+Please set the proxy from GUI manually first.
+(System Settings -> Network -> Network proxy)
+
 If you want to change proxy by script, please
 set the proxy setting files:
-/etc/environment  - reload file when reboot
-/etc/apt/apt.conf - apt used
+- /etc/environment  - reload file when reboot
+- /etc/apt/apt.conf - apt used
+
+## Installation
+
+To **install** or **update** set-proxy you can run this command:
+
+`curl -fsSL https://raw.githubusercontent.com/ujnzxw/proxy-config/master/install.sh | sh`
+
+You can also install it in a different path
+
+`INSTALL_DIR=$HOME/.set-proxy sh <(curl -fsSL https://raw.githubusercontent.com/ujnzxw/proxy-config/master/install.sh)`
+
+
+_Note: You should reload your shell in both cases_
 
 ## Usage
-
+```
+Usage: set-proxy [OPTIONS] COMMAND [ none | manual | auto ]
+    OPTIONS
+        --update        # update proxy-config to the latest version
+        --uninstall     # uninstall proxy-config
+    COMMAND
+        none            # set proxy mode - none
+        man[ual]        # set proxy mode - manual
+        auto[matic]     # set proxy mode - automatic
+```
 
 
 ### License
-Copyright (c) 2014-2016 ujnzxw <ujnzxw@gmail.com>
+Copyright (c) 2016 ujnzxw <zhaoxiaowei.txt@gmail.com>
 
-Distributed under the MIT license. See the LICENSE file for
-more details.
+Distributed under the MIT license. See the LICENSE file for more details.

@@ -25,11 +25,14 @@ popd > /dev/null 2>&1
 echo_help()
 {
 	cat << __EOF__
-	Usage: $0 [OPTIONS COMMAND] [ none | manual | auto ]
+Usage: $0 [OPTIONS] COMMAND [ none | manual | auto ]
     OPTIONS
-        --update        update proxy-config to the latest version
-        --uninstall     uninstall proxy-config
-
+        --update        # update proxy-config to the latest version
+        --uninstall     # uninstall proxy-config
+    COMMAND
+        none            # set proxy mode - none
+        man[ual]        # set proxy mode - manual
+        auto[matic]     # set proxy mode - automatic
 __EOF__
 }
 # change proxy to none mode
@@ -70,7 +73,7 @@ case "$1" in
 		echo_help
         ;;
 
-	manual)
+	manual|man)
 		set_proxy_manual
         ;;
 
