@@ -12,7 +12,7 @@ set the proxy setting files:
 
 To **install** or **update** set-proxy you can run this command:
 
-`INSTALL_DIR=$HOME/.set-proxy sh <(curl -fsSL https://raw.githubusercontent.com/ujnzxw/proxy-config/master/install.sh)`
+`INSTALL_DIR=$HOME/.proxy-config sh <(curl -fsSL https://raw.githubusercontent.com/ujnzxw/proxy-config/master/install.sh)`
 
 
 _Note: You should reload your shell in both cases_
