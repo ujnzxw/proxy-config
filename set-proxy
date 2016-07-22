@@ -8,66 +8,89 @@
 #			   : If you want to change proxy by script, please
 #              : set the proxy setting files:
 #				 /etc/environment  - reload file when reboot
-#				 /etc/apt/apt.conf - apt used               #-----------------------------------------------------------
+#				 /etc/apt/apt.conf - apt used
+#-----------------------------------------------------------
+if [ -L $0 ]; then
+    pushd `readlink $0 | xargs dirname` > /dev/null 2>&1
+else
+    pushd `dirname $0` > /dev/null 2>&1
+fi
+export UPATH=`pwd -P`
+popd > /dev/null 2>&1
 
 
 #--------------Functions------------------------------------
 
 # help function
-function echo_help()
+echo_help()
 {
-	echo "Usage: $0 none|manual|auto"
+	cat << __EOF__
+	Usage: $0 [OPTIONS COMMAND] [ none | manual | auto ]
+    OPTIONS
+        --update        update proxy-config to the latest version
+        --uninstall     uninstall proxy-config
+
+__EOF__
 }
 # change proxy to none mode
-function set_proxy_none()
+set_proxy_none()
 {
 	echo " Set proxy mode - none"
 	gsettings set org.gnome.system.proxy mode none
 }
 
 # change proxy to manual mode
-function set_proxy_manual()
+set_proxy_manual()
 {
 	echo " Set proxy mode - manual"
 	gsettings set org.gnome.system.proxy mode manual
 }
 # change proxy to automatic
-function set_proxy_auto()
+set_proxy_auto()
 {
 	echo " Set proxy mode - automatic"
 	gsettings set org.gnome.system.proxy mode auto
 }
-#-------------------Main------------------------------------
+#-------------------Main----------------------------
 
 case "$1" in
-	"-h"|"--help" )
+    --update)
+        INSTALL_DIR=${UPATH} ${UPATH}/install.sh
+        exit 0
+        ;;
+    --uninstall)
+        confirm "Do you want to uninstall u-cli? [y/n]: " \
+            && sudo rm -rf ${UPATH} 2>/dev/null \
+            && sudo rm -f "/usr/local/bin/u" 2>/dev/null \
+            && echo "Done !"
+        exit 0
+        ;;
+
+	-h|--help|h|help)
 		echo_help
-	;;
+        ;;
 
-	manual )
+	manual)
 		set_proxy_manual
-	;;
+        ;;
 
-	none )
+	none)
 		set_proxy_none
-	;;
+        ;;
 
-	automatic|auto )
+	automatic|auto)
 		set_proxy_auto
-	;;
-
-	* )
+        ;;
+    *)
 		# success - $?=0; fail - $?=1
 		ip a | grep 192.168 > /dev/null
 		# check if grep is successful
 		if [ $? -eq 0 ]; then
-			# Using pc in home
+			# Using pc at home
 			set_proxy_none
 		else
 			# Using pc in office
 			set_proxy_manual
-
 		fi
-	;;
-
+        ;;
 esac
