@@ -35,6 +35,20 @@ Usage: $0 [OPTIONS] COMMAND [ none | manual | auto ]
         auto[matic]     # set proxy mode - automatic
 __EOF__
 }
+confirm()
+{
+    # call with a prompt string or use a default
+    read -r -p "${1:-Are you sure (default NO)? [y/N]} " response
+    case $response in
+        [yY][eE][sS]|[yY])
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+}
+
 # change proxy to none mode
 set_proxy_none()
 {
