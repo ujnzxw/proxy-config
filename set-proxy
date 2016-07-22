@@ -76,9 +76,9 @@ case "$1" in
         exit 0
         ;;
     --uninstall)
-        confirm "Do you want to uninstall u-cli? [y/n]: " \
+        confirm "Do you want to uninstall set-proxy? [y/n]: " \
             && sudo rm -rf ${UPATH} 2>/dev/null \
-            && sudo rm -f "/usr/local/bin/u" 2>/dev/null \
+            && sudo rm -f "/usr/local/bin/set-proxy" 2>/dev/null \
             && echo "Done !"
         exit 0
         ;;
